@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/EnhancedAuthContext";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Sprout,
   Menu,
@@ -89,7 +90,7 @@ export function Navigation({
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "bg-white/90 backdrop-blur-xl shadow-card"
+            ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl shadow-card"
             : "bg-transparent"
         }`}
       >
@@ -118,7 +119,7 @@ export function Navigation({
                 <button
                   key={link.label}
                   onClick={() => scrollToSection(link.href)}
-                  className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-white/50"
+                  className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-white/50 dark:hover:bg-white/10"
                 >
                   {link.label}
                 </button>
@@ -127,6 +128,9 @@ export function Navigation({
 
             {/* Right Side */}
             <div className="flex items-center gap-2">
+              {/* Dark Mode Toggle */}
+              <ThemeToggle />
+
               {/* Admin Access */}
               <button
                 onClick={onOpenAdmin}
@@ -142,7 +146,7 @@ export function Navigation({
                   {kycStatus !== "verified" && (
                     <button
                       onClick={onOpenKYC}
-                      className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
+                      className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors"
                     >
                       {getKYCStatusIcon()}
                       <span>KYC</span>
@@ -152,7 +156,7 @@ export function Navigation({
                   {/* Crypto Wallets */}
                   <button
                     onClick={onOpenCryptoWallets}
-                    className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-gray-100"
+                    className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-white/10"
                   >
                     <QrCode className="w-4 h-4" />
                     <span>Wallets</span>
@@ -172,7 +176,7 @@ export function Navigation({
                   </button>
 
                   {/* Notifications */}
-                  <button className="relative p-2 rounded-xl hover:bg-gray-100 transition-colors">
+                  <button className="relative p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
                     <Bell className="w-5 h-5 text-muted-foreground" />
                     {unreadCount > 0 && (
                       <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
@@ -182,7 +186,7 @@ export function Navigation({
                   </button>
 
                   {/* User Balance */}
-                  <div className="flex items-center gap-2 px-3 py-2 bg-white/60 rounded-xl border border-gray-200/50">
+                  <div className="flex items-center gap-2 px-3 py-2 bg-white/60 dark:bg-white/10 rounded-xl border border-gray-200/50 dark:border-white/10">
                     <User className="w-4 h-4 text-led-purple" />
                     <span className="text-sm font-medium truncate max-w-[80px]">
                       {user?.name}
@@ -195,7 +199,7 @@ export function Navigation({
                     variant="ghost"
                     size="icon"
                     onClick={logout}
-                    className="rounded-xl hover:bg-red-50 hover:text-red-500"
+                    className="rounded-xl hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-500"
                   >
                     <LogOut className="w-4 h-4" />
                   </Button>
@@ -212,7 +216,7 @@ export function Navigation({
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2 rounded-xl hover:bg-white/60 transition-colors"
+                className="lg:hidden p-2 rounded-xl hover:bg-white/60 dark:hover:bg-white/10 transition-colors"
               >
                 {isMobileMenuOpen ? (
                   <X className="w-5 h-5" />
@@ -236,7 +240,7 @@ export function Navigation({
           onClick={() => setIsMobileMenuOpen(false)}
         />
         <div
-          className={`absolute top-[72px] left-4 right-4 bg-white rounded-3xl shadow-card p-6 transition-all duration-300 ${
+          className={`absolute top-[72px] left-4 right-4 bg-white dark:bg-gray-900 rounded-3xl shadow-card p-6 transition-all duration-300 ${
             isMobileMenuOpen
               ? "translate-y-0 opacity-100"
               : "-translate-y-4 opacity-0"
@@ -247,7 +251,7 @@ export function Navigation({
               <button
                 key={link.label}
                 onClick={() => scrollToSection(link.href)}
-                className="flex items-center gap-3 px-4 py-3 text-left text-foreground hover:bg-gray-50 rounded-xl transition-colors"
+                className="flex items-center gap-3 px-4 py-3 text-left text-foreground hover:bg-gray-50 dark:hover:bg-white/10 rounded-xl transition-colors"
               >
                 <link.icon className="w-5 h-5 text-led-purple" />
                 <span className="font-medium">{link.label}</span>
@@ -256,13 +260,13 @@ export function Navigation({
 
             {isAuthenticated && (
               <>
-                <div className="border-t border-gray-100 my-2" />
+                <div className="border-t border-gray-100 dark:border-white/10 my-2" />
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
                     onOpenCryptoWallets();
                   }}
-                  className="flex items-center gap-3 px-4 py-3 text-left text-foreground hover:bg-gray-50 rounded-xl transition-colors"
+                  className="flex items-center gap-3 px-4 py-3 text-left text-foreground hover:bg-gray-50 dark:hover:bg-white/10 rounded-xl transition-colors"
                 >
                   <QrCode className="w-5 h-5 text-led-purple" />
                   <span className="font-medium">Crypto Wallets</span>
@@ -272,7 +276,7 @@ export function Navigation({
                     setIsMobileMenuOpen(false);
                     onOpenReferral();
                   }}
-                  className="flex items-center gap-3 px-4 py-3 text-left text-foreground hover:bg-gray-50 rounded-xl transition-colors"
+                  className="flex items-center gap-3 px-4 py-3 text-left text-foreground hover:bg-gray-50 dark:hover:bg-white/10 rounded-xl transition-colors"
                 >
                   <Users className="w-5 h-5 text-led-purple" />
                   <span className="font-medium">Refer & Earn</span>
@@ -288,7 +292,7 @@ export function Navigation({
                       setIsMobileMenuOpen(false);
                       onOpenKYC();
                     }}
-                    className="flex items-center gap-3 px-4 py-3 text-left text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-colors"
                   >
                     <AlertCircle className="w-5 h-5" />
                     <span className="font-medium">Complete KYC</span>
@@ -297,7 +301,7 @@ export function Navigation({
               </>
             )}
 
-            <div className="border-t border-gray-100 my-2" />
+            <div className="border-t border-gray-100 dark:border-white/10 my-2" />
 
             {/* Admin Link Mobile */}
             <button
@@ -305,13 +309,13 @@ export function Navigation({
                 setIsMobileMenuOpen(false);
                 onOpenAdmin();
               }}
-              className="flex items-center gap-3 px-4 py-3 text-left text-foreground hover:bg-gray-50 rounded-xl transition-colors"
+              className="flex items-center gap-3 px-4 py-3 text-left text-foreground hover:bg-gray-50 dark:hover:bg-white/10 rounded-xl transition-colors"
             >
               <ShieldCheck className="w-5 h-5 text-led-purple" />
               <span className="font-medium">Admin Dashboard</span>
             </button>
 
-            <div className="border-t border-gray-100 my-2" />
+            <div className="border-t border-gray-100 dark:border-white/10 my-2" />
 
             {isAuthenticated ? (
               <>
@@ -326,7 +330,7 @@ export function Navigation({
                 </div>
                 <button
                   onClick={logout}
-                  className="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-xl transition-colors"
+                  className="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-colors"
                 >
                   <LogOut className="w-5 h-5" />
                   <span className="font-medium">Logout</span>
