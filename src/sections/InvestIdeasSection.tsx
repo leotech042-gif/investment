@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Lightbulb, TrendingUp, Shield, Globe, Cpu, Leaf, ArrowRight, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/EnhancedAuthContext';
 import { toast } from 'sonner';
 
 interface InvestmentIdea {

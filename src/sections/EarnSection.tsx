@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Sprout, TrendingUp, Shield, Clock, Percent, Wallet } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/EnhancedAuthContext';
 import { toast } from 'sonner';
 
 const earningsData = [

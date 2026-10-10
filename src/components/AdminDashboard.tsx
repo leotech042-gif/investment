@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/EnhancedAuthContext';
 import { 
   Shield, 
   Users, 
@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import type { Transaction } from '@/data/database';
+import type { Transaction } from '@/data/enhancedDatabase';
 
 interface AdminDashboardProps {
   onClose: () => void;
@@ -107,7 +107,7 @@ export function AdminDashboard({ onClose }: AdminDashboardProps) {
               />
             </div>
             <p className="text-xs text-muted-foreground text-center">
-              Demo: admin@investglowing.com / admin123
+              Demo: admin@investglowing.com / Admin@123!
             </p>
             <Button
               onClick={handleLogin}

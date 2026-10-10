@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { TrendingUp, TrendingDown, Activity, ArrowUpRight, ArrowDownRight, Clock, RefreshCw, DollarSign } from 'lucide-react';
 import { AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/EnhancedAuthContext';
 import { realMarketAssets, formatCurrency, type MarketAsset } from '@/data/realMarketData';
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -450,53 +450,29 @@ export function MarketSection() {
                     placeholder="0.00"
                     value={tradeAmount}
                     onChange={(e) => updateTradeAmount(e.target.value, true)}
-                    className="h-14 text-lg font-mono rounded-xl pr-20"
+                    className="h-12 rounded-xl"
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">
-                    {selectedAsset.symbol}
-                  </span>
                 </div>
               </div>
-              
-              <div className="flex items-center justify-center">
-                <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-                  <DollarSign className="w-4 h-4 text-muted-foreground" />
-                </div>
-              </div>
-              
               <div>
-                <Label className="text-sm text-muted-foreground mb-2 block">Total (USD)</Label>
+                <Label className="text-sm text-muted-foreground mb-2 block">
+                  Total (USD)
+                </Label>
                 <div className="relative">
                   <Input
                     type="number"
                     placeholder="0.00"
                     value={tradeAmountUSD}
                     onChange={(e) => updateTradeAmount(e.target.value, false)}
-                    className="h-14 text-lg font-mono rounded-xl pr-16"
+                    className="h-12 rounded-xl"
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">
-                    USD
-                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Info */}
-            <div className="flex items-start gap-2 p-3 rounded-xl bg-gray-50">
-              <Clock className="w-4 h-4 text-muted-foreground mt-0.5 flex-shrink-0" />
-              <p className="text-xs text-muted-foreground">
-                Fee: 0.5% • Settlement: Instant • Min: $10
-              </p>
-            </div>
-
-            {/* Action Button */}
             <Button
               onClick={handleTrade}
-              className={`w-full h-14 text-lg font-medium rounded-xl transition-all duration-300 ${
-                tradeType === 'buy'
-                  ? 'bg-led-green hover:bg-led-green/90 text-white'
-                  : 'bg-red-500 hover:bg-red-500/90 text-white'
-              }`}
+              className={`w-full h-12 ${tradeType === 'buy' ? 'bg-led-green hover:bg-led-green/90' : 'bg-red-500 hover:bg-red-500/90'} text-white`}
             >
               {tradeType === 'buy' ? 'Buy' : 'Sell'} {selectedAsset.symbol}
             </Button>
