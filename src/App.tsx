@@ -48,11 +48,11 @@ function MainContent() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      toast.info("Welcome to Invest Glowing! 🌱", {
+      toast.info("Welcome to Invest Glowing", {
         description: "Demo: demo@investglowing.com / Demo@123!",
-        duration: 8000,
+        duration: 7000,
       });
-    }, 2000);
+    }, 1800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -62,7 +62,7 @@ function MainContent() {
   };
 
   return (
-    <div className="relative min-h-screen bg-lab-white">
+    <div className="relative min-h-screen bg-background">
       <div className="grain-overlay" />
 
       <Navigation
