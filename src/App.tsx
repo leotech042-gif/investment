@@ -84,7 +84,6 @@ function MainContent() {
           cardHeader="Unified balance view"
           cardMicrocopy="Real-time sync across assets. Tap any card to expand details."
           chips={["Cash", "Crypto", "Cards", "Ideas"]}
-          bgImage="/feature_bg_farm_02.jpg"
           glowColor="purple"
         />
         <FeatureSection
@@ -93,7 +92,6 @@ function MainContent() {
           headline="Send & receive in seconds."
           body="Transfers between members are instant. External wallets and banks are tracked with clear confirmations."
           pillText="Sent • $240.00"
-          bgImage="/feature_bg_farm_03.jpg"
           glowColor="green"
           reversed
         />
