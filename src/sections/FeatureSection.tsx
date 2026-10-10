@@ -10,7 +10,7 @@ interface FeatureSectionProps {
   cardMicrocopy?: string;
   chips?: string[];
   pillText?: string;
-  bgImage: string;
+  bgImage?: string;
   glowColor: 'purple' | 'green' | 'blue';
   reversed?: boolean;
 }
@@ -31,7 +31,6 @@ export function FeatureSection({
   cardMicrocopy,
   chips,
   pillText,
-  bgImage,
   glowColor,
   reversed = false,
 }: FeatureSectionProps) {
@@ -41,24 +40,18 @@ export function FeatureSection({
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        if (entry.isIntersecting) setIsVisible(true);
       },
       { threshold: 0.2 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
   const glowClass = {
-    purple: 'shadow-led-purple',
-    green: 'shadow-led-green',
-    blue: 'shadow-led-blue',
+    purple: 'led-glow-purple',
+    green: 'led-glow-green',
+    blue: 'led-glow-blue',
   }[glowColor];
 
   const glowBg = {
@@ -71,33 +64,23 @@ export function FeatureSection({
     <section
       ref={sectionRef}
       id={id}
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-[80vh] flex items-center overflow-hidden bg-background"
     >
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${bgImage})` }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(180deg, rgba(246,247,250,0.88) 0%, rgba(246,247,250,0.45) 50%, rgba(246,247,250,0.85) 100%)',
-          }}
-        />
+      {/* Soft gradient background — no farm images */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className={`absolute ${reversed ? 'left-0' : 'right-0'} top-1/4 w-[500px] h-[500px] rounded-full blur-3xl opacity-30 ${
+          glowColor === 'purple' ? 'bg-purple-400/20' : glowColor === 'green' ? 'bg-emerald-400/20' : 'bg-blue-400/20'
+        }`} />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-center ${reversed ? 'lg:flex-row-reverse' : ''}`}>
-          {/* Text Block */}
+        <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-center`}>
           <div
             className={`${reversed ? 'lg:order-2' : ''} transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${reversed ? 'translate-x-20' : '-translate-x-20'}`
             }`}
           >
-            <span className="font-mono text-xs uppercase tracking-wider text-led-purple mb-4 block">
-              {eyebrow}
-            </span>
+            <span className="section-label mb-4">{eyebrow}</span>
             <h2 className="font-display font-bold text-4xl sm:text-5xl text-foreground mb-6 leading-tight">
               {headline}
             </h2>
@@ -110,13 +93,12 @@ export function FeatureSection({
             </button>
           </div>
 
-          {/* Feature Card */}
           <div
             className={`${reversed ? 'lg:order-1' : ''} transition-all duration-700 delay-200 ${
               isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${reversed ? '-translate-x-20' : 'translate-x-20'}`
             }`}
           >
-            <div className={`glass-card ${glowClass} p-8 ambient-glow`}>
+            <div className={`glass-card ${glowClass} p-8`}>
               {cardHeader && (
                 <div className="mb-6">
                   <h3 className="font-display font-semibold text-xl text-foreground mb-2">
@@ -145,7 +127,7 @@ export function FeatureSection({
                         className={`flex flex-col items-center gap-3 p-4 rounded-2xl ${glowBg} hover:scale-105 transition-transform duration-300 cursor-pointer`}
                         style={{ animationDelay: `${index * 0.1}s` }}
                       >
-                        <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm">
+                        <div className="w-12 h-12 rounded-xl bg-background flex items-center justify-center shadow-sm border border-border">
                           <Icon className="w-6 h-6 text-foreground" />
                         </div>
                         <span className="text-sm font-medium text-foreground">{chip}</span>
@@ -155,8 +137,7 @@ export function FeatureSection({
                 </div>
               )}
 
-              {/* Decorative element */}
-              <div className="mt-6 pt-6 border-t border-gray-100">
+              <div className="mt-6 pt-6 border-t border-border">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">Status</span>
                   <span className="font-mono text-led-green">Active</span>
